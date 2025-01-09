@@ -1,50 +1,59 @@
 class Livre:    #class livre
+
     def __init__(self, Titre, Auteur, Nb_Pages):    #constructeur de class Livre
-        self.Titre = Titre      #Attributs Titre | Auteur 
-        self.Auteur = Auteur
         try:
-            self.Nb_Pages = int(Nb_Pages)
-            if Nb_Pages > 0:
-                print("nombre des pages accepté")
-            else:
-                raise ValueError("le nombre des pages doit etre POSITIVE") 
-        except Exception as e:  #-----except an error 
+            if not isinstance(Nb_Pages, int) or Nb_Pages <= 0:      #====================
+                raise ValueError("le nombre des pages doit etre ENTIER POSITIVE") 
+            self.Titre = Titre      #Attributs Titre | Auteur 
+            self.Auteur = Auteur
+            self.Nb_Pages = Nb_Pages
+        except ValueError as e:  #-----except an error 
             print(f"Erreur de type : {e}")
+        else:
+             ("Le neauvou livre ajouté ave c succes !")
         finally:    #----Finally
-            print(f"le titre de livre {self.Titre}, l' auteur {self.Auteur},
-                    et le Nombre des pages {self.Nb_Pages}")
+            print(f"le titre de livre {self.Titre}, l' auteur {self.Auteur}, et le Nombre des pages {self.Nb_Pages}")
+
 
 
 class Bibliotheque:     #class Bibliothéque
     
-    def __init__(self, Livres=None):     #constructeur de Bibliothéque
-        if self.Livres is None:
-            Livres = [] 
-        self.Livres = Livres    #Attribut de l'instance
+    def __init__(self):     #constructeur de Bibliothéque
+        self.Livres = [] 
 
-
-    def AjouterLivre(self):     #fonction de l' Ajoute de Livre
+    def AjouterLivre(self, livre_A):     #fonction de l' Ajoute de Livre
         try:
-            livre_A = input("Entrer un livre : ")
-            if isinstance(livre_A, Livre):   
-                self.Livres.append(livre_A)
-            else:
-                raise TypeError(f"la class livre pas contient de : {livre_A} !")
-        except Exception as e:  #----except an error
+            if not isinstance(livre_A, Livre):
+                raise TypeError(f"Livre pas contient d'instance !")
+            self.Livres.append(livre_A)
+        except TypeError as e:  #----except an error
             print(f"Erreur de type : {e}")
+        else:
+            ("Le livre etait ajouté avec succes.")
         finally:
-            print("Le livre etait ajouté avec succes. ")
-        
+            print("fin de l'opération de l' Ajoute.")
 
-    def SupprimerLivre(self):   #fonction de supprission 
+
+    def SupprimerLivre(self, Titre):   #fonction de supprission 
         try:    
-            Titre_S = input("entrer le titre pour le supprimer : ")
+            Livre_S = None
             for Livre in self.Livres:
-                if Titre_S in self.Livres:
-                    self.Livres.remove(Livre) 
-                else:
-                    raise Exception("Ce titre n'est exist pas !")
-        except Exception as e:  #----except an error 
-            print(f"Erreur de type : {e}")
+                if Livre[Titre] == Livre_S:
+                    Livre_S = Livre
+                    break
+            if Livre_S is None:
+                raise KeyError("Ce titre n'est exist pas !")
+            self.Livres.remove(Livre_S)
+        except KeyError as e:
+            print(f"Erreur lors de la supprission : {e}")
         finally:
-            print("Le titre etait supprimé avec succes")
+            print("fin de l'opération de la supprission")
+
+
+#======= instanciation ========#
+
+livre = Livre("Arabe", "Ahmed", 200)
+
+livre = Bibliotheque()
+livre.AjouterLivre("Francais")
+livre.SupprimerLivre("Mathematique")
