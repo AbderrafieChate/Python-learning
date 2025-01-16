@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
-
 #---- création de l'interface ----
 fenetre = tk.Tk() 
 fenetre.title("Tableau")
